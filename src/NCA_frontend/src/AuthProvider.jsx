@@ -11,7 +11,7 @@ const defaultOptions = {
         },
     },
     loginOptions: {
-        identityProvider: "",
+        identityProvider: "http://be2us-64aaa-aaaaa-qaabq-cai.localhost:4943/",
     },
 };
 
@@ -24,84 +24,85 @@ export const useAuthClient = (options = defaultOptions) => {
 
     // Initialize AuthClient on mount
     useEffect(() => {
-        const initializeAuthClient = async () => {
-            try {
-                const client = await AuthClient.create(options.createOptions);
-                updateClient(client);
-            } catch (error) {
-                console.error("Error creating AuthClient:", error);
-            }
-        };
-        initializeAuthClient();
+        AuthClient.create(options.createOptions).then(async (client) =>{
+            updateClient(client);
+        });
     }, []);
 
     // Update client state and set identity
-    const updateClient = async (client) => {
-        try {
-            const isAuthenticated = await client.isAuthenticated();
-            setIsAuth(isAuthenticated);
+    async function updateClient (client) {
+        const isAuthenticated = await client.isAuthenticated();
+        setIsAuth(isAuthenticated);
 
-            if (isAuthenticated) {
-                const identity = client.getIdentity();
-                const principal = identity.getPrincipal();
+        const identity = client.getIdentity();
+        setIdentity(identity);
+        
+        const principal = identity.getPrincipal();
+        setPrincipal(principal);
 
-                setIdentity(identity);
-                setPrincipal(principal);
-                setAuthUser(client);
+        setAuthUser(client);
 
-                const actor = createActor(canisterId, {
-                    agentOptions: {
-                        identity,
-                    },
-                });
+        const actor1 = createActor(canisterId, {
+            agentOptions:{
+                identity,
+            },
+        });
 
-                setCallFunction(actor);
-            } else {
-                resetAuthState();
-            }
-        } catch (error) {
-            console.error("Error updating AuthClient:", error);
-        }
+        setCallFunction(actor1);
     };
 
     // Reset the authentication state
-    const resetAuthState = () => {
-        setIdentity(null);
-        setPrincipal(null);
-        setAuthUser(null);
-        setCallFunction(null);
-    };
+    // const resetAuthState = () => {
+    //     setIdentity(null);
+    //     setPrincipal(null);
+    //     setAuthUser(null);
+    //     setCallFunction(null);
+    // };
 
     // Login function
-    const login = async () => {
-        if (authUser) {
-            try {
-                await authUser.login({
-                    ...options.loginOptions,
-                    onSuccess: () => {
-                        updateClient(authUser);
-                    },
-                    onError: (error) => {
-                        console.error("Login failed:", error);
-                    },
-                });
-            } catch (error) {
-                console.error("Error logging in:", error);
-            }
-        }
+    const login = () => {
+        authUser.login({
+            ...options.loginOptions,
+            onSuccess: () => {
+                updateClient(authUser);
+            },
+        });
     };
 
     // Logout function
-    const logout = async () => {
-        try {
-            if (authUser) {
-                await authUser.logout();
-                resetAuthState();
-            }
-        } catch (error) {
-            console.error("Error logging out:", error);
-        }
+    async function logout(){
+        await authUser?.logout();
+        await updateClient(authUser);
     };
+
+    // const login = async () => {
+    //     if (authUser) {
+    //         try {
+    //             await authUser.login({
+    //                 ...options.loginOptions,
+    //                 onSuccess: () => {
+    //                     updateClient(authUser);
+    //                 },
+    //                 onError: (error) => {
+    //                     console.error("Login failed:", error);
+    //                 },
+    //             });
+    //         } catch (error) {
+    //             console.error("Error logging in:", error);
+    //         }
+    //     }
+    // };
+
+    // const logout = async () => {
+    //     try {
+    //         if (authUser) {
+    //             await authUser.logout();
+    //             resetAuthState();
+    //         }
+    //     } catch (error) {
+    //         console.error("Error logging out:", error);
+    //     }
+    // };
 
     return {
         isAuth,

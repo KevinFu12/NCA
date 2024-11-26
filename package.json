@@ -17,12 +17,18 @@
     "src/NCA_backend"
   ],
   "dependencies": {
+    "@chakra-ui/react": "^3.2.0",
+    "@cloudinary/url-gen": "^1.21.0",
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
     "@tanstack/react-query": "^5.61.3",
     "create": "^0.0.0",
+    "framer-motion": "^11.11.17",
     "fuzz": "^0.0.3",
     "lodash": "^4.17.21",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-icons": "^5.3.0",
     "react-query": "^3.39.3",
     "react-router-dom": "^7.0.1",
     "vite": "^5.4.11"

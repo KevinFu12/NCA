@@ -1,18 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import '../style/Header.css'
+import '../style/Header.css';
 import { useNavigate } from "react-router-dom";
-import logoImg from '../assets/header/logo-img.png'
-import logoNCA from '../assets/header/logo-NCA.png'
-import loginImg from '../assets/header/login.png'
-import {useAuth} from '../AuthProvider'
+import logoImg from '../assets/header/logo-img.png';
+import logoNCA from '../assets/header/logo-NCA.png';
+import loginImg from '../assets/header/login.png';
+import {useAuth} from '../AuthProvider';
 import { Link } from "react-router-dom";
 // import { AuthState } from "../context/AuthContext";
 
 function Header(){
-    // const [result, setResult] = useState();
-    // const {callFunction,login, logout} = useAuth();
-
-    const navigate = useNavigate();
+    const [result, setResult] = useState("");
+    const {callFunction,login, logout} = useAuth();
+    const handleClick = async() => {
+        const id = await callFunction.idprincipal();
+        setResult(id);
+    }
+    // const navigate = useNavigate();
 
     // const clickHandler = async () =>{
     //     await login();
@@ -49,6 +52,9 @@ function Header(){
                     {/* {isAuth ? (
                         <button onClick = {clickHandler()}>Login</button>
                     ):( */}
+                    {/* <button type = "button" onclick = {handleClick}
+                    >Show Id?
+                    </button> */}
                         <Link to="/NCA/login">
                             <button>Login</button>
                         </Link>

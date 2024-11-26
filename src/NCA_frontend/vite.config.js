@@ -53,6 +53,10 @@ export default defineConfig({
         find: 'react-query',
         replacement: '@tanstack/react-query',
       },
+      {
+        find: '@',
+        replacement: fileURLToPath(new URL('../../src', import.meta.url)),
+      },
     ],
   },
 });

@@ -17,7 +17,8 @@ import LogRegInput from './component/LogRegInput';
 import Supported from './component/Supported';
 import Logout from './component/Logout';
 import '../index.css';
-import {Navigate} from 'react-router-dom'
+import {Navigate} from 'react-router-dom';
+import {useAuth} from './AuthProvider';
 
 // Define routes for the app
 const routes = [
@@ -52,6 +53,7 @@ const routes = [
 ];
 
 function App() {
+  const {isAuth} = useAuth();
   const queryClient = new QueryClient();
 
   return (
@@ -76,3 +78,9 @@ function App() {
 }
 
 export default App;
+
+// export default () => {
+//   <AuthProvider>
+//     <App/>
+//   </AuthProvider>
+// }

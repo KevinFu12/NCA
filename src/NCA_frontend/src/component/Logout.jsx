@@ -1,9 +1,13 @@
-// src/component/Logout.jsx
-
 import React from 'react';
+import { useAuth } from '../AuthProvider';
 
-const Logout = () => {
-  return <div>Logout Page</div>;
-};
-
-export default Logout;  // Make sure this line exists
+export default function logout(){
+  const {login} = useAuth();
+  return(
+    <div>
+      <button type="button" onClick={{login}}>
+        Log In
+      </button>
+    </div>
+  )
+}

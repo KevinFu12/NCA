@@ -76,9 +76,7 @@ actor Data{
   //Func to get a user by principal
   public query func getUser (principal : Principal) : async ?User{
     return users.get(principal);
-  };
-
-  
+  };  
 
   //Func to update user by principal
   public shared func updateUser (principal : Principal, user : User) : async (){
