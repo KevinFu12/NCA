@@ -2,7 +2,19 @@ import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import '../style/Action.css';
 
-function Action({ greenCoin, setGreenCoin, actionName, imgColorUrl, imgProgressUrl, actionTarget, actionGradient }) {
+import imgColor1 from '../assets/action/actionWalking.png'
+import imgProg1 from '../assets/action/actionWalkingProg.png'
+
+import imgColor2 from '../assets/action/actionTransport.png'
+import imgProg2 from '../assets/action/actionTransportProg.png'
+
+import imgColor3 from '../assets/action/actionVehicle.png'
+import imgProg3 from '../assets/action/actionVehicleProg.png'
+
+import imgColor4 from '../assets/action/actionCycing.png'
+import imgProg4 from '../assets/action/actionCycingProg.png'
+
+function Action({ greenCoin, setGreenCoin, actionName, imgColorUrl, imgProgressUrl, actionTarget, actionGradient, actionMode}) {
     const [active, setActive] = useState(0);
     const [progress, setProgress] = useState(0);
 
@@ -26,7 +38,16 @@ function Action({ greenCoin, setGreenCoin, actionName, imgColorUrl, imgProgressU
                         <h1>{actionName}</h1>
                     </div>
                     <div className="card-right">
-                        <img src={`/NCA/${imgColorUrl}`} alt="Action Img" />
+                        {
+                            actionMode == 1 ? 
+                                <img src={imgColor1} alt="Action Img" />
+                            : actionMode == 2 ? 
+                                <img src={imgColor2} alt="Action Img" />
+                            : actionMode == 3 ?
+                                <img src={imgColor3} alt="Action Img" /> 
+                            :
+                                <img src={imgColor4} alt="Action Img" />
+                        }
                     </div>
                 </div>
             ) : (
@@ -38,7 +59,16 @@ function Action({ greenCoin, setGreenCoin, actionName, imgColorUrl, imgProgressU
                         <div className="card-progress-img">
                             <div className="card-img-blank" style={{ width: `${(progress * 100) / actionTarget}%` }}></div>
                             <div className="card-img-wrapper">
-                                <img src={`/NCA/${imgProgressUrl}`} alt="Img Progress" />
+                                {
+                                    actionMode == 1 ? 
+                                        <img src={imgProg1} alt="Action Img" />
+                                    : actionMode == 2 ? 
+                                        <img src={imgProg2} alt="Action Img" />
+                                    : actionMode == 3 ?
+                                        <img src={imgProg3} alt="Action Img" /> 
+                                    :
+                                        <img src={imgProg4} alt="Action Img" />
+                                }
                             </div>
                         </div>
                         <div className="card-progress-bar-outside">
