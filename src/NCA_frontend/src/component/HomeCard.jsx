@@ -25,9 +25,9 @@ function HomeCard(props){
 
                 <div className="homeCard-right">
                     {
-                        imgMode == 1 ? 
+                        props.imgMode == 1 ? 
                         <img src={img1}/>
-                        : imgMode == 2 ?
+                        : props.imgMode == 2 ?
                         <img src={img2}/>
                         :
                         <img src={img3}/>
