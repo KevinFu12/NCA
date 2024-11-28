@@ -54,12 +54,13 @@ function Contribute(){
 
                             <div className="action-card-container">
                                 <div className="action-pair">
-                                    <Action actionName={"Walking"} imgColorUrl={"actionWalking.png"} actionGradient={"linear-gradient(#9AD2B2, #B9FFD8)"} imgProgressUrl={"actionWalkingProg.png"} actionTarget={40}/>
-                                    <Action actionName={"Public Transport"} imgColorUrl={"actionTransport.png"} actionGradient={"linear-gradient(#ACBCFF, #FFFFFF)"} imgProgressUrl={"actionTransportProg.png"} actionTarget={300}/>
+                                    <Action actionName={"Walking"} imgColorUrl={"actionWalking.png"} actionGradient={"linear-gradient(#9AD2B2, #B9FFD8)"} imgProgressUrl={"actionWalkingProg.png"} actionTarget={40} actionMode={1}/>
+                                    <Action actionName={"Public Transport"} imgColorUrl={"actionTransport.png"} actionGradient={"linear-gradient(#ACBCFF, #FFFFFF)"} imgProgressUrl={"actionTransportProg.png"} actionTarget={300} actionMode={2}/>
                                 </div>
+                                
                                 <div className="action-pair">
-                                    <Action actionName={"Electric Vehicle"} imgColorUrl={"actionVehicle.png"} actionGradient={"linear-gradient(#FFAAAA, #FFEDED)"} imgProgressUrl={"actionVehicleProg.png"} actionTarget={1250}/>
-                                    <Action actionName={"Cycling"} imgColorUrl={"actionCycling.png"} actionGradient={"linear-gradient(#00CB88, #99FFA0)"} imgProgressUrl={"actionCyclingProg.png"} actionTarget={833}/>
+                                    <Action actionName={"Electric Vehicle"} imgColorUrl={"actionVehicle.png"} actionGradient={"linear-gradient(#FFAAAA, #FFEDED)"} imgProgressUrl={"actionVehicleProg.png"} actionTarget={1250} actionMode={3}/>
+                                    <Action actionName={"Cycling"} imgColorUrl={"actionCycling.png"} actionGradient={"linear-gradient(#00CB88, #99FFA0)"} imgProgressUrl={"actionCyclingProg.png"} actionTarget={833} actionMode={4}/>
                                 </div>
                             </div>
                         </div>
