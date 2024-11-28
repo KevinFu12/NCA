@@ -1,4 +1,4 @@
-<p align="center"><a href="https://identity.ic0.app" target="_blank" rel="noopener noreferrer"><img src="https://i.ibb.co.com/h2hLzHy/black-and-white-deer-silhouette-with-two-different-trees-behind-it.jpg" alt="NCA"></a></p>
+<p align="center"><a href="https://identity.ic0.app" target="_blank" rel="noopener noreferrer"><img src="https://i.ibb.co.com/MsMwkvx/Logo-NCA.png" alt="NCA"></a></p>
 
 ## Introduction
 Nature Call for Action (NCA) is a decentralized platform that motivate users to maintain a healthy and green environment through several green activities. It is built on the Internet Computer and uses the Motoko programming language. The platform is designed to be decentralized, secure, and scalable. It is also designed to be easy to use and accessible to everyone.
@@ -35,7 +35,7 @@ Go to visual studio code, create a new folder, and view terminal.
 
 ```
 git clone https://github.com/KevinFu12/NCA.git
-cd sunshine
+cd NCA
 npm install
 npm i -g ic-mops
 
