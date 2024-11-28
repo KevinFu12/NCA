@@ -12,10 +12,12 @@ function LoggedOut() {
     // <ChakraTemplate>
       <div>
         <div>
-          <div>
-            Hello Stranger!
-          </div>
-          <div>You are not authenticated</div>
+          <center>
+            <div>
+              Hello Stranger!
+            </div>
+            <div>You are not authenticated</div>
+          </center>
           <button onClick={login}>
                 Log In
           </button>
