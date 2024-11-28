@@ -8,6 +8,8 @@ import { useQuery } from "@tanstack/react-query";
 import Snackbar from "../Snackbar";
 import { IoMdAlert } from "react-icons/io";
 import { FaCircleCheck } from "react-icons/fa6";
+import { AuthProvider } from "../use-auth-client";
+import {Navigate} from 'react-router-dom';
 
 import Header from './Header.jsx'
 import Input from './LogRegInput.jsx'
@@ -15,17 +17,17 @@ import Footer from './Footer.jsx'
 
 import '../style/LogRegInput.css'
 
-console.log('ChakraProvider value', sys);
-
-function Login() {
+function LoggedIn() {
   document.title = "Login Page | NCA";
+  console.log("In Logged In");
+  // const auth = useAuth();
 
 //   const [result, setResult] = useState("");
   const [first_name, setFname] = useState("");
   const [last_name, setLname] = useState("");
   const [dob, setDob] = useState("");
-  const [money, setMoney] = useState("-");
-  const { user, principal, logout, getUser } = useAuth() || {};
+  // const [money, setMoney] = useState("-");
+  const { user, principal, logout, getUser } = useAuth();
   const [email, setEmail] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
   const navigate = useNavigate();
@@ -33,76 +35,65 @@ function Login() {
   const [alreadyRegistered, setAlreadyRegistered] = useState(false);
   const [password, setPassword] = useState();
 //   const [button, setButton] = useState();
+const [redirectToNCA, setRedirectToNCA] = useState(false);
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading} = useQuery({
     queryKey: ["getUser", user],
     queryFn: getUser,
   });
 
   const handleRegister = () => {
     setIsUpdating(true);
+  
     async function tryRegister() {
-      if (!validateUser()) {
+      // Validate user input
+      // if (!validateUser()) {
+      //   setIsUpdating(false);
+      //   return;
+      // }
+  
+      try {
+        if (data.err) {
+          // If user does not exist, register a new account
+          const registerFlag = await user.register(
+            principal,
+            first_name,
+            last_name,
+            dob,
+            email,
+            password
+          );
+  
+          if (registerFlag === true) {
+            setIsUpdating(false);
+            setAlreadyRegistered(true);
+            return <Navigate to="/NCA" />;
+          }
+        } else {
+          // If user exists, update account details
+          const updateFlag = await user.updateUser(
+            data.ok.internet_identity,
+            first_name,
+            last_name,
+            dob,
+            email,
+            password
+          );
+  
+          if (updateFlag === true) {
+            setIsUpdating(false);
+            setAlreadyRegistered(true);
+            return <Navigate to="/NCA" />;
+          }
+        }
+      } catch (error) {
+        console.error("Error during registration/update:", error);
         setIsUpdating(false);
-        return;
-      }
-      if (data.err) {
-        // Validation logic
-        const registerFlag = await user.register(
-          principal,
-          first_name,
-          last_name,
-          dob,
-          email,
-          password
-        );
-        if (registerFlag === true) {
-          setIsUpdating(false);
-          setAlreadyRegistered(true);
-          window.location.reload();
-          toaster.success("Your account has been registered!", {
-            duration: 5000,
-            position: "bottom-right",
-            render: () => (
-              <Snackbar
-                bgColor="bg-green-600"
-                icon={<FaCircleCheck color="white" />}
-                title="Success"
-                description="Your account has been registered!"
-              />
-            ),
-          });
-        }
-      } else {
-        const updateFlag = await user.updateUser(
-          data.ok.internet_identity,
-          first_name,
-          last_name,
-          dob,
-          email,
-          password
-        );
-
-        setAlreadyRegistered(true);
-        if (updateFlag === true) {
-          setIsUpdating(false);
-          toaster.success("Your account has been updated!", {
-            duration: 5000,
-            position: "bottom-right",
-            render: () => (
-              <Snackbar
-                bgColor="bg-green-600"
-                icon={<FaCircleCheck color="white" />}
-                title="Success"
-                description="Your account has been updated!"
-              />
-            ),
-          });
-        }
       }
     }
+  
     tryRegister();
-  };
+  };  
 
   const validateUser = () => {
     if (first_name === "" || last_name === "") {
@@ -232,13 +223,16 @@ function Login() {
 
   useEffect(() => {
     if (!isLoading) {
+      console.log("Fetched user data:", data);
       if (data.ok) {
-        setName(data.ok.name);
+        setFname(data.ok.first_name);
+        setLname(data.ok.last_name);
         setEmail(data.ok.email);
-        setDob(data.ok.birth_date);
-        setImage(data.ok.profileUrl);
-        setMoney(data.ok.money.toString());
+        setDob(data.ok.dob);
+        setPassword(data.ok.password);
+        // setMoney(data.ok.money.toString());
         setAlreadyRegistered(true);
+        return <Navigate to="/NCA" />;
       } else {
         setAlreadyRegistered(false);
       }
@@ -247,8 +241,13 @@ function Login() {
 
   if (isLoading) return <div>loading</div>;
 
+  if (redirectToNCA) {
+    return <Navigate to="/NCA" />;
+  }
+
   return (
-    <ChakraTemplate>
+    // <AuthProvider>
+    
     <>
       <div className="form-container">
         <form className='logReg-form-container'>
@@ -258,28 +257,30 @@ function Login() {
           <Input value={dob} onChange={(e) => setDob(e.target.value)} inputType={"date"} title={"Birth Date"} description={"Provide Your Birth Date"} imgName={"formCalendar.png"} />
           <Input value={email} onChange={(e) => setEmail(e.target.value)} inputType={"email"} title={"Email"} description={"Provide Your Personal Email"} imgName={"formEmail.png"} placeholder={"sigma@gmail.com"} />
           <Input value={password} onChange={(e) => setPassword(e.target.value)} inputType={"password"} title={"Password"} description={"Provide Your Password"} imgName={"formPassword.png"} placeholder={"password"} />
-          <Input inputType={"link"} title={"/NCA/login"} description={"Already Have an Account?"} />
+          {/* <Input inputType={"link"} title={"/NCA/login"} description={"Already Have an Account?"} /> */}
           <Input inputType={"checkbox"} description={"I Accept All The Terms and Requirements "} />
           {!isUpdating ? (
-            <Button onClick={handleRegister}>
+            <button onClick={handleRegister}>
               {alreadyRegistered ? "Update Data" : "Register"}
-            </Button>
+            </button>
           ) : (
             <>
-              <Button isLoading></Button>
+              <button isLoading></button>
             </>
           )}
-          <Button onClick={() => {
+          <button onClick={() => {
             logout();
-            window.location.reload();
+            // window.location.reload();
+            setRedirectToNCA(true);
           }}>
             Log Out
-          </Button>
+          </button>
         </form>
       </div>
     </>
-    </ChakraTemplate>
+    
+    // </AuthProvider>
   );
 }
 
-export default Login;
+export default LoggedIn;

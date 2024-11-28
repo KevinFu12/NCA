@@ -11,18 +11,11 @@ import { useNavigate } from "react-router-dom";
 const AuthContext = createContext();
 
 const defaultOptions = {
-  /**
-   *  @type {import("@dfinity/auth-client").AuthClientCreateOptions}
-   */
   createOptions: {
     idleOptions: {
-      // Set to true if you do not want idle functionality
       disableIdle: true,
     },
   },
-  /**
-   * @type {import("@dfinity/auth-client").AuthClientLoginOptions}
-   */
   loginOptions: {
     identityProvider:
       process.env.DFX_NETWORK === "ic"
@@ -38,63 +31,83 @@ export const useAuthClient = (options = defaultOptions) => {
   const [principal, setPrincipal] = useState(null);
   const [whoamiActor, setWhoamiActor] = useState(null);
   const [user, setUser] = useState(null);
+  const [isInitializing, setIsInitializing] = useState(true);  // New state for initialization flag
   const navigate = useNavigate();
 
   useEffect(() => {
-    AuthClient.create(options.createOptions).then(async (client) => {
-      await updateClient(client);
-    }).catch(error => {
-      console.error("Error creating AuthClient", error);
-    });
-  }, []);
+    const initializeAuthClient = async () => {
+      try {
+        const client = await AuthClient.create(options.createOptions);
+        await updateClient(client);
+      } catch (error) {
+        console.error("Error creating AuthClient", error);
+        setIsInitializing(false);  // Stop loading on error
+      }
+    };
+
+    initializeAuthClient();
+  }, [options.createOptions]); // Add `createOptions` as dependency
 
   const login = () => {
-    if (!authClient) return;
+    if (!authClient) {
+      console.error("authClient is not initialized yet.");
+      return;
+    }
     authClient.login({
       ...options.loginOptions,
       onSuccess: () => {
         updateClient(authClient);
       },
+      onError: (error) => {
+        console.error("Login failed:", error);
+      }
     });
-  };
-  
-  const logout = async () => {
-    if (!authClient) return;
-    await authClient.logout();
-    await updateClient(authClient);
   };  
 
+  const logout = async () => {
+    try {
+      if (!authClient) {
+        console.error("authClient is not initialized yet.");
+        return;
+      }
+      await authClient.logout();
+      await updateClient(authClient);
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
+  // Update client state and fetch user-related data
   async function updateClient(client) {
-    const isAuthenticated = await client.isAuthenticated();
-    setIsAuthenticated(isAuthenticated);
-
-    const identity = client.getIdentity();
-    setIdentity(identity);
-
-    const principal = identity.getPrincipal();
-    setPrincipal(principal);
-
-    setAuthClient(client);
-
-    const actor = createActor(canisterId, {
-      agentOptions: {
-        identity,
-      },
-    });
-
-    setUser(actor);
+    try {
+      const isAuthenticated = await client.isAuthenticated();
+      const identity = client.getIdentity();
+      const principal = identity.getPrincipal();
+      const actor = createActor(canisterId, { agentOptions: { identity } });
+  
+      setAuthClient(client);
+      setIsAuthenticated(isAuthenticated);
+      setIdentity(identity);
+      setPrincipal(principal);
+      setWhoamiActor(actor);
+      setUser(actor);
+    } catch (error) {
+      console.error("Error updating client:", error);
+      setIsInitializing(false); // Stop loading on error
+      setIsAuthenticated(false); // Mark as not authenticated
+    }
   }
 
+  // Authentication check function with error handling
   async function checkAuthentication() {
-    if (!authClient || !principal) {
-      navigate(`/NCA/login`);
-      return false;
-    }
+    // if (isInitializing || !authClient || !principal) {
+    //   return false; // Avoid checking if still initializing
+    // }
   
     const check = await authClient.isAuthenticated();
-    const checkUser = await NCA_backend.getUserById(principal).catch(error => {
+    const checkUser = await NCA_backend.getUser(principal).catch((error) => {
       console.error("Error fetching user", error);
-      return { err: true }; // Return a default error value
+      return { err: true };
     });
   
     if (!check || checkUser.err) {
@@ -103,13 +116,24 @@ export const useAuthClient = (options = defaultOptions) => {
     return check;
   }
 
+  // Function to get user info by principal
   const getUser = async () => {
-    if (!user || !principal) return null;
+    if (!user || !principal) {
+      console.error("User or Principal is missing.");
+      return null;
+    }
     try {
-      const loggedInUser = await user.getUserById(principal);
-      return loggedInUser;
+      // Check if the user actor has the required method
+      if (typeof user.getUser === 'function') {
+        const loggedInUser = await user.getUser(principal);
+        console.log("Logged-in user:", loggedInUser);
+        return loggedInUser;
+      } else {
+        console.error("getUserById is not a function on the user actor.");
+        return null;
+      }
     } catch (error) {
-      console.error("Error fetching logged-in user", error);
+      console.error("Error fetching logged-in user:", error);
       return null;
     }
   };  
@@ -125,14 +149,22 @@ export const useAuthClient = (options = defaultOptions) => {
     user,
     checkAuthentication,
     getUser,
+    isInitializing,  // Expose initialization status to components
   };
 };
 
-/**
- * @type {React.FC}
- */
 export const AuthProvider = ({ children }) => {
   const auth = useAuthClient();
+  console.log("Auth state:", auth);
+
+  // if (auth.isInitializing) {
+  //   console.log("AuthClient is initializing...");
+  //   return <div>Loading authentication...</div>;
+  // }
+
+  // if (!auth.isAuthenticated) {
+  //   return <div>Error: Unable to authenticate. Please try again.</div>;
+  // }
 
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 };

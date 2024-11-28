@@ -15,13 +15,14 @@ export default defineConfig({
     assetsDir: 'assets',
     emptyOutDir: true,
     outdir: 'dist',
-    sourcemap: true,
+    sourcemap: false,
   },
   optimizeDeps: {
     esbuildOptions: {
       define: {
         global: "globalThis",
       },
+      include: ['@chakra-ui/react'],
     },
   },
   server: {

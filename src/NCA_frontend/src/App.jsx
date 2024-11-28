@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from 'react';
+// import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+// import { StrictMode } from 'react';
+// import { createRoot } from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { AuthProvider } from './AuthProvider';
+import { AuthProvider } from './use-auth-client';
 import Home from './component/Home';
 import Contribute from './component/Contribute';
 import PurchaseCC from './component/PurchaseCC';
-import Login from './component/Login';
 import Register from './component/Register';
-import Footer from './component/Footer';
-import Header from './component/Header';
-import HomeCard from './component/HomeCard';
-import LatestNews from './component/LatestNews';
-import LogRegInput from './component/LogRegInput';
-import Supported from './component/Supported';
+// import Footer from './component/Footer';
+// import Header from './component/Header';
+// import HomeCard from './component/HomeCard';
+// import LatestNews from './component/LatestNews';
+// import LogRegInput from './component/LogRegInput';
+// import Supported from './component/Supported';
 import Logout from './component/Logout';
 import '../index.css';
 import {Navigate} from 'react-router-dom';
-import {useAuth} from './AuthProvider';
+import {useAuth} from './use-auth-client';
+import LoginPage from './component/LoginPage';
 
 // Define routes for the app
 const routes = [
@@ -36,7 +36,7 @@ const routes = [
   },
   {
     path: "/NCA/login",
-    element: <Login />,
+    element: <LoginPage />,
   },
   {
     path: "/NCA/register",
@@ -58,10 +58,9 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <BrowserRouter>
+      <BrowserRouter>
+        <AuthProvider>
           <main id="mainapp">
-            {/* Place your Navbar here */}
             {/* <Header /> */}
             <Routes>
               <Route path="/" element = {<Navigate to="/NCA" />} />
@@ -71,8 +70,8 @@ function App() {
             </Routes>
             {/* <Footer /> */}
           </main>
-        </BrowserRouter>
-      </AuthProvider>
+        </AuthProvider>
+      </BrowserRouter>
     </QueryClientProvider>
   );
 }
