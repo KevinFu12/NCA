@@ -2,6 +2,11 @@ import '../style/LogRegInput.css'
 
 import { Link } from "react-router-dom";
 
+import imgCalendar from '../assets/form/formCalendar.png'
+import imgEmail from '../assets/form/formEmail.png'
+import imgNamee from '../assets/form/formName.png'
+import imgPassword from '../assets/form/formPassword.png'
+
 function LogRegInput({
     value,
     setValue,
@@ -11,8 +16,6 @@ function LogRegInput({
     imgName,
     placeholder
 }){
-    const imgUrl = `/NCA/${imgName}`
-
     const inputHandling = (e) => {
         setValue(e.target.value);
     }
@@ -61,7 +64,16 @@ function LogRegInput({
                     </div>
                     <div className="input-right">
                         <div className="input-wrap">
-                            <img src={imgUrl} alt="Image" />
+                            {
+                                imgName == "formName.png" ? 
+                                    <img src={imgNamee} alt="Image" />
+                                : imgName == "formEmail.png" ? 
+                                    <img src={imgEmail} alt="Image" />
+                                : imgName == "formCalendar.png" ? 
+                                    <img src={imgCalendar} alt="Image" />
+                                :
+                                    <img src={imgPassword} alt="Image" />
+                            }
                             <input type={inputType} placeholder={placeholder} onChange={(e) => inputHandling(e)}/>
                         </div>
                     </div>
