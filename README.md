@@ -1,4 +1,4 @@
-<p align="center"><a href="https://identity.ic0.app" target="_blank" rel="noopener noreferrer"><img src="../NCA/src/NCA_frontend/public/assets/header/logo-NCA.png" alt="Internet Identity"></a></p>
+<p align="center"><a href="https://identity.ic0.app" target="_blank" rel="noopener noreferrer"><img src="https://ibb.co.com/P13FH4N" alt="NCA"></a></p>
 
 ## Introduction
 Nature Call for Action (NCA) is a decentralized platform that motivate users to maintain a healthy and green environment through several green activities. It is built on the Internet Computer and uses the Motoko programming language. The platform is designed to be decentralized, secure, and scalable. It is also designed to be easy to use and accessible to everyone.
