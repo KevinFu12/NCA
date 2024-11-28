@@ -11,8 +11,8 @@ import imgProg2 from '../assets/action/actionTransportProg.png'
 import imgColor3 from '../assets/action/actionVehicle.png'
 import imgProg3 from '../assets/action/actionVehicleProg.png'
 
-import imgColor4 from '../assets/action/actionCycing.png'
-import imgProg4 from '../assets/action/actionCycingProg.png'
+import imgColor4 from '../assets/action/actionCycling.png'
+import imgProg4 from '../assets/action/actionCyclingProg.png'
 
 function Action({ greenCoin, setGreenCoin, actionName, imgColorUrl, imgProgressUrl, actionTarget, actionGradient, actionMode}) {
     const [active, setActive] = useState(0);
