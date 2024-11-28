@@ -54,42 +54,42 @@ function Home(){
             "Discover",
             "Daily Challenges",
             "Open Now",
-            "homeCard-dailyChallenge.png",
+            1,
             "https://guthib.com/"
         ],
         [
             "Discover",
             "Leaderboard",
             "Open Now",
-            "homeCard-leaderboard.png",
+            2,
             "https://ns2006.github.io/NCA/"
         ],
         [
             "Discover",
             "Green Coin Explained",
             "Watch Now",
-            "homeCard-greenCoin.png",
+            3,
             "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
         ],
         [
             "Discover",
             "P Diddy's New Song",
             "Watch Now",
-            "homeCard-dailyChallenge.png",
+            1,
             "https://www.youtube.com/watch?v=khKdXTmbhDw"
         ],
         [
             "Discover",
             "Tea Party's Information",
             "Read Now",
-            "homeCard-greenCoin.png",
+            2,
             "https://bluearchive.fandom.com/wiki/Tea_Party"
         ],
         [
             "Discover",
             "What Is This ???",
             "Watch Now",
-            "homeCard-greenCoin.png",
+            2,
             "https://www.youtube.com/watch?v=Ix-Y4jv7yvM"
         ]
     ]
@@ -154,11 +154,11 @@ function Home(){
                         <img src={prevIcon} alt="Prev Icon" className='homeCard-icon' id='prevIcon' onClick={() => clickHandlingHomeCard(0)} style={{visibility: homeCardCount <= 0 ? "hidden" : "visible"}}/>
                     </div>
 
-                    <HomeCard text1={listCard[homeCardCount][0]} text2={listCard[homeCardCount][1]} text3={listCard[homeCardCount][2]} imgUrl={listCard[homeCardCount][3]} clickUrl={listCard[homeCardCount][4]}/>
+                    <HomeCard text1={listCard[homeCardCount][0]} text2={listCard[homeCardCount][1]} text3={listCard[homeCardCount][2]} imgMode={listCard[homeCardCount][3]} clickUrl={listCard[homeCardCount][4]}/>
 
-                    <HomeCard text1={listCard[homeCardCount2][0]} text2={listCard[homeCardCount2][1]} text3={listCard[homeCardCount2][2]} imgUrl={listCard[homeCardCount2][3]} clickUrl={listCard[homeCardCount2][4]}/>
+                    <HomeCard text1={listCard[homeCardCount2][0]} text2={listCard[homeCardCount2][1]} text3={listCard[homeCardCount2][2]} imgMode={listCard[homeCardCount2][3]} clickUrl={listCard[homeCardCount2][4]}/>
 
-                    <HomeCard text1={listCard[homeCardCount3][0]} text2={listCard[homeCardCount3][1]} text3={listCard[homeCardCount3][2]} imgUrl={listCard[homeCardCount3][3]} clickUrl={listCard[homeCardCount3][4]}/>
+                    <HomeCard text1={listCard[homeCardCount3][0]} text2={listCard[homeCardCount3][1]} text3={listCard[homeCardCount3][2]} imgMode={listCard[homeCardCount3][3]} clickUrl={listCard[homeCardCount3][4]}/>
 
                     <div className="homecard-icon-container">
                         <img src={nextIcon} alt="Next Icon" className='homeCard-icon' id='nextIcon' onClick={() => clickHandlingHomeCard(1)} style={{visibility: homeCardCount >= 3 ? "hidden" : "visible"}}/>

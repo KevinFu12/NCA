@@ -2,6 +2,10 @@ import PropTypes from 'prop-types'
 
 import '../style/HomeCard.css'
 
+import img1 from '../assets/homeCard/homeCard-dailyChallenge.png'
+import img2 from '../assets/homeCard/homeCard-greenCoin.png'
+import img3 from '../assets/homeCard/homeCard-leaderboard.png'
+
 function HomeCard(props){
     let imgUrl = props.imgUrl;
 
@@ -20,7 +24,16 @@ function HomeCard(props){
                 </div>
 
                 <div className="homeCard-right">
-                    <img src={imgUrl} alt="Card Image" />
+                    {
+                        imgMode == 1 ? 
+                        <img src={img1}/>
+                        : imgMode == 2 ?
+                        <img src={img2}/>
+                        :
+                        <img src={img3}/>
+                        
+                    }
+                    {/* <img src={imgUrl} alt="Card Image" /> */}
                 </div>
             </a>
         </>
@@ -32,7 +45,8 @@ HomeCard.propTypes = {
     text2: PropTypes.string,
     text3: PropTypes.string,
     clickUrl: PropTypes.string,
-    imgUrl: PropTypes.string
+    imgUrl: PropTypes.string,
+    imgMode: PropTypes.number
 }
 
 export default HomeCard;
