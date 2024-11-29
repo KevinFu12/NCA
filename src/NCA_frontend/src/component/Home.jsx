@@ -199,7 +199,7 @@ function Home(){
                                         </li> <br />
 
                                         <li>
-                                            <b>Earn</b>: After your submission is reviewed and approved, you'll receive <b>Green Tokens</b> as a reward for your eco-friendly actions. These tokens symbolize your commitment to sustainability and your contributions toward a healthier planet. 
+                                            <b>Earn</b>: After your submission is reviewed and approved, you'll receive <b>Green Coins</b> as a reward for your eco-friendly actions. These coins symbolize your commitment to sustainability and your contributions toward a healthier planet. 
                                         </li> <br />
 
                                         <li>
