@@ -191,7 +191,7 @@ function Home(){
                                 <div className="actEarn-left">
                                     <ol>
                                         <li>
-                                            <b>Act</b>: Start your journey by taking action! Engage in eco-friendly practice such as using a reusable bag, recycled stuff, or even doing volunteer cleanup. <b>Every small step homeCardCounts</b> toward a greener world.
+                                            <b>Act</b>: Start your journey by taking action! Engage in eco-friendly practice such as using a reusable bag, recycled stuff, or even doing volunteer cleanup. <b>Every small step counts</b> toward a greener world.
                                         </li> <br />
 
                                         <li>
