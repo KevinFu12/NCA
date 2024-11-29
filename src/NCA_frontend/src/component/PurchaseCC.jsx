@@ -61,7 +61,7 @@ function PurchaseCC({ greenCoin, setGreenCoin }) {
                                     </div>
                                 </div>
                                 <div className="cc-description-bottom">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque temporibus, alias minus nemo totam placeat amet aperiam explicabo eum labore? Necessitatibus, vitae rem iste id nemo reiciendis quia nihil debitis, dicta, quo facere. Quis doloribus consectetur impedit dolores aliquam iste, est, incidunt nam explicabo odio officia quisquam quam. Quod, deserunt. lorem100</p>
+                                    <p>Green Coins are the rewards you earn for participating in eco-friendly activities through NCA. These tokens represent your commitment to sustainability and can be traded for Carbon Credits, which contribute to various environmental initiatives. Simply select the number of Green Coins you wish to trade, and let your actions help build a more sustainable future. Together, we can make a significant impact!</p>
                                     <p><b>What is Carbon Credit?</b></p>
                                 </div>
                             </div>
