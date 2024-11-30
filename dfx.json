@@ -9,7 +9,7 @@
       "type": "motoko"
     },
     "NCA_frontend": {
-      "dependencies": [
+      "dependencies": [ 
         "NCA_backend"
       ],
       "source": [
